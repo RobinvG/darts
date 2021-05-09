@@ -1,0 +1,8 @@
+<div fxLayout="row" fxLayoutAlign="space-evenly stretch" class="wrapper" fxLayoutGap="4px">
+    <app-player class="block" fxFlex [player]="game.player1" [playing]="game.playing" [started]="game.started"  (getScore)="setScore($event)"></app-player>
+    <app-player *ngIf="game.player2" class="block" fxFlex [player]="game.player2" [playing]="game.playing" [started]="game.started" (getScore)="setScore($event)"></app-player>
+    <app-player *ngIf="game.player3" class="block" fxFlex [player]="game.player3" [playing]="game.playing" [started]="game.started" (getScore)="setScore($event)"></app-player>
+    <app-player *ngIf="game.player4" class="block" fxFlex [player]="game.player4" [playing]="game.playing" [started]="game.started" (getScore)="setScore($event)"></app-player>
+</div>
+
+

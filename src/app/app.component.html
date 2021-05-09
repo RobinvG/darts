@@ -1,0 +1,19 @@
+<mat-toolbar color="primary">
+  <div [routerLink]="['']" >Darts</div>
+  <span class="example-spacer"></span>
+  <!-- <button mat-icon-button  aria-label="Stats" [routerLink]="['/stats']" >
+    <mat-icon>leaderboard</mat-icon>
+  </button> -->
+  <button mat-icon-button aria-label="Settings" [routerLink]="['/settings']" >
+    <mat-icon>settings</mat-icon>
+  </button>
+  <button mat-icon-button [matMenuTriggerFor]="menu"><mat-icon>format_color_fill</mat-icon></button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="themingService.theme.next('light-theme')">Light theme</button>
+    <button mat-menu-item (click)="themingService.theme.next('dark-theme')">Dark theme</button>
+  </mat-menu>
+
+</mat-toolbar>
+
+
+<router-outlet ></router-outlet> 

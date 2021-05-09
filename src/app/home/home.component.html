@@ -1,0 +1,43 @@
+<mat-card fxLayout="column" fxLayoutAlign="center center" >
+    <div fxLayout="column" fxLayoutGap="14px">
+        <div>
+            <div>Type</div>
+            <div class="game_type">
+                <mat-radio-group
+                    aria-labelledby="example-radio-group-label"
+                    [(ngModel)]="gameType" *ngFor="let type of gameTypes; let i = index;">
+                    <mat-radio-button [ngClass]="{'active': gameType === type}" disableRipple="true" [value]="type">{{type}}</mat-radio-button>
+                </mat-radio-group>
+            </div>
+        </div>
+        <div>
+            <div>legs (First to)</div>
+            <mat-form-field appearance="outline" class="fullwidth">
+                <input type="number" matInput [(ngModel)]="legs">
+            </mat-form-field>
+        </div>
+        <div>
+            <div>players ({{players.length}})</div>
+            <div *ngFor="let player of players; let i =index">
+                <mat-form-field appearance="outline"  [ngClass]="{'fullwidth': i >= 0}"   >
+                    <mat-label>player {{i + 1}}</mat-label>
+                    <input matInput [(ngModel)]="players[i].name" >
+                </mat-form-field>
+            </div>
+            <div  fxLayout="row" fxLayoutAlign="space-evenly stretch" > 
+                <div fxFlex *ngIf="players.length < 4"  class="add_player"   (click)="players.push({name:''})">
+                    <mat-icon>add</mat-icon> <span class="icon-label" >Add player</span>
+                </div>
+                <div fxFlex class="add_player" (click)="players.splice(-1,1);">
+                    <mat-icon>remove</mat-icon> <span class="icon-label"  >Remove player</span>
+                </div>
+            </div>
+        </div>
+        <div class="error"  *ngIf="error">
+            <div *ngFor="let error of errorMessages">{{error}}</div>
+        </div>
+        <button mat-raised-button color="primary" class="fullwidth" (click)="startGame()">Game On</button>
+
+    </div>
+
+</mat-card>

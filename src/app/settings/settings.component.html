@@ -1,0 +1,35 @@
+<mat-card fxLayout="column" fxLayoutAlign="start center" >
+
+    <div>
+        <mat-slide-toggle labelPosition="before" [(ngModel)]="mqtt.enable" >MQTT</mat-slide-toggle >
+
+        <mat-form-field >
+            <mat-label>URi</mat-label>
+            <input  matInput [(ngModel)]="mqtt.uri" [disabled]="!mqtt.enable">
+        </mat-form-field>
+        
+        <mat-form-field >
+            <mat-label>Port</mat-label>
+            <input  matInput type="number" [(ngModel)]="mqtt.port" [disabled]="!mqtt.enable">
+        </mat-form-field>
+
+        <mat-slide-toggle [(ngModel)]="mqtt.ssl" >SSL</mat-slide-toggle >
+
+
+        <mat-form-field >
+            <mat-label>Path</mat-label>
+            <input  matInput [(ngModel)]="mqtt.path" [disabled]="!mqtt.enable">
+        </mat-form-field>
+    
+        <mat-form-field hintLabel="Saved as plain text in localstorage !!">
+            <mat-label>Username</mat-label>
+            <input  matInput [(ngModel)]="mqtt.username" [disabled]="!mqtt.enable">
+        </mat-form-field>
+    
+        <mat-form-field hintLabel="Saved as plain text in localstorage !!">
+            <mat-label>Password</mat-label>
+            <input  matInput type="password" [(ngModel)]="mqtt.password" [disabled]="!mqtt.enable">
+        </mat-form-field> 
+    </div>
+    <button mat-raised-botton (click)="saveSetting()">Save</button>
+</mat-card>

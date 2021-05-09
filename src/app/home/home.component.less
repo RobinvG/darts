@@ -1,0 +1,78 @@
+mat-card{
+    height: calc(100% - 64px);
+}
+
+.game_type{
+    order: 3px solid white;
+    display: inline-block;
+    border-radius: 20px;
+    width: 250px;
+    box-shadow: 1px 3px 5px 0 #EDEDED;
+    border: 1px solid #e0e0e0 !important;
+    padding: 10px 20px !important;
+}
+
+.game_type input{
+  display: none;
+}
+
+.game_type mat-radio-button{
+    display: inline-block;
+    width: 20% !important;
+    color: #3d5866;
+    font-size: 14px;
+    font-weight: normal;
+    text-shadow: none;
+    padding: 8px 0 !important;
+    -webkit-transition: all 0.1s ease-in-out;
+    -moz-transition: all 0.1s ease-in-out;
+    -ms-transition: all 0.1s ease-in-out;
+    -o-transition: all 0.1s ease-in-out;
+    transition: all 0.1s ease-in-out;
+    font-weight: bold;
+    font-size: 14px !important;
+    text-transform: uppercase;
+}
+
+mat-radio-button.active {
+    background: #3f51b5;
+    color: white !important;
+    border-radius: 20px;
+}
+
+  
+::ng-deep .mat-radio-button .mat-radio-container {
+    width: 0;
+  }
+::ng-deep .mat-radio-container .mat-radio-outer-circle,
+::ng-deep .mat-radio-container .mat-radio-inner-circle {
+    border: none;
+    width: 0;
+}
+
+
+.fullwidth{
+    width: 100%;
+}
+
+mat-form-field{
+    width: 80%;
+}
+
+.remove{
+    margin-left: 14px;
+}
+
+.add_player{
+    cursor: pointer;
+    color: #0093FF;
+}
+.icon-label{
+    position: absolute;
+    margin-top: 2px;
+    margin-left: 5px; 
+}
+
+.error{
+    color: red;
+}

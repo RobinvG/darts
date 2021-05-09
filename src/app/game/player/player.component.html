@@ -1,0 +1,97 @@
+<mat-card class="wrapper">
+<div fxLayout="row"> 
+    <div fxFlex="6" class="last_scores">
+        <div *ngFor="let score of player.scores">
+            {{score}}
+        </div>
+    </div>
+    <div fxFlex="90">
+        <div class="player_name">   
+            {{player.name}}
+            <div *ngIf="player.playerNumber == started" class="dot started"></div>
+        </div>
+        <div class="score_left">
+            {{player.scoreLeft}}
+        </div>
+        <div class="legs">
+            Legs {{player.won}}
+            <div>{{dartService.getThrowOut(player.scoreLeft)}}</div>
+        </div>
+    
+    </div>
+  
+</div>
+<div class="score">
+    <mat-form-field appearance="outline"  *ngIf="player.playerNumber == playing;">
+        <input type="number" #sc matInput (keyup.enter)="setScore(sc.value)" >
+    </mat-form-field>
+
+    <div *ngIf="player.playerNumber != playing && player.scores.length > 0 && !setUndo;">
+        <button (click)="setUndo = true" mat-icon-button>
+            <mat-icon>undo</mat-icon>
+        </button>    
+    </div>
+
+    <mat-form-field appearance="outline"  *ngIf="setUndo">
+        <input type="number" #sc matInput (keyup.enter)="Undo(sc.value)" >
+    </mat-form-field>
+</div>
+
+<div fxLayout="column" fxLayoutAlign="space-evenly stretch" class="stats">
+    <div>
+        <div class="topic">Game</div>
+        <div fxLayout="row">
+            <div class="title" fxFlex>3 darts </div>
+            <div class="value" fxFlex>{{player.average * 3 | number:'1.0-2'}}</div>
+        </div> 
+        <div fxLayout="row">
+            <div class="title" fxFlex>1 dart </div>
+            <div class="value" fxFlex>{{player.average | number:'1.0-2'}}</div>
+        </div> 
+    </div>
+    <div>
+        <div class="topic">Amount</div>
+
+        <div fxLayout="row">
+            <div class="title" fxFlex>180</div>
+            <div class="value" fxFlex>{{player.stats["180"]}}</div>
+        </div> 
+        <div fxLayout="row">
+            <div class="title" fxFlex>140+</div>
+            <div class="value" fxFlex>{{player.stats["140+"]}}</div>
+        </div> 
+        <div fxLayout="row">
+            <div class="title" fxFlex>100+</div>
+            <div class="value" fxFlex>{{player.stats["100+"]}}</div>
+        </div>
+        <div fxLayout="row">
+            <div class="title" fxFlex>80+</div>
+            <div class="value" fxFlex>{{player.stats["80+"]}}</div>
+        </div>  
+        <div fxLayout="row">
+            <div class="title" fxFlex>60+</div>
+            <div class="value" fxFlex>{{player.stats["60+"]}}</div>
+        </div> 
+        <div fxLayout="row">
+            <div class="title" fxFlex>Lolly</div>
+            <div class="value" fxFlex>{{player.stats.lolly}}</div>
+        </div> 
+        <div fxLayout="row">
+            <div class="title" fxFlex>Shots</div>
+            <div class="value" fxFlex>{{player.stats.shots}}</div>
+        </div> 
+    </div>
+    <div>
+        <div class="topic">Pro</div>
+        <div fxLayout="row">
+            <div class="title" fxFlex>Highest Finish </div>
+            <div class="value" fxFlex>{{player.stats.highestOut}}</div>
+        </div> 
+        <div fxLayout="row">
+            <div class="title" fxFlex>Nine darter </div>
+            <div class="value" fxFlex>{{player.stats.nineDarter}}</div>
+        </div> 
+    </div>
+ </div>
+
+</mat-card>
