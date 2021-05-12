@@ -10,6 +10,8 @@ import {throwOut} from './throwout'
   providedIn: 'root'
 })
 export class TrainingService {
+  private subs:  Subscription[] = []
+
   training = new BehaviorSubject<training>({
     finishes: [
       {finish: 100, scoreLeft: 100, throws: [], locked: false},
@@ -24,13 +26,26 @@ export class TrainingService {
   ) {
     if (this.mqttService.mqtt.enable){
       this.mqttService.subscribeShot()
+      this.externalCommands()
+
     }
+  }
+
+  externalCommands(){
+    this.subs.push(this.mqttService.externalCommands.subscribe(command => {
+
+    }))
   }
 
   startTraining(starts: number, easy_mode: boolean|  undefined){
     this.easy_mode =  easy_mode ? easy_mode : false
     this.training.next({
       finishes: [{finish: starts, scoreLeft: starts,  throws: [], locked: false}]
+    })
+    this.mqttService.publishScore({
+      player: "",
+      score: starts,
+      scoreLeft: this.getThrowOut(starts),
     })
   } 
 
@@ -49,21 +64,26 @@ export class TrainingService {
 
     if (lastFinish.throws.length === 3 && lastFinish.scoreLeft - score !== 0 ){
       if (!this.easy_mode){
-        for (var i = training.finishes.length - 1; i >= 0; i--) {
-          if (!training.finishes[i].locked){
-            training.finishes.splice(i, i)
-          }else{
-            break
+        if (training.finishes.length === 1){
+          training.finishes[training.finishes.length-1].scoreLeft = lastFinish.finish
+          training.finishes[training.finishes.length-1].throws = []
+        }else{
+          for (var i = training.finishes.length - 1; i >= 0; i--) {
+            if (!training.finishes[i].locked){
+              training.finishes.splice(i, i)
+            }else{
+              break
+            }
           }
+          let newFinish =  training.finishes[training.finishes.length-1].finish + 1
+          let test  = {finish: newFinish, scoreLeft: newFinish, throws: [], locked: false}
+          training.finishes.push(test)
         }
-        let newFinish =  training.finishes[training.finishes.length-1].finish + 1
-        let test  = {finish: newFinish, scoreLeft: newFinish, throws: [], locked: false}
-        training.finishes.push(test)
+
       }else{
         training.finishes[training.finishes.length-1].scoreLeft = lastFinish.finish
         training.finishes[training.finishes.length-1].throws = []
       }
-
      
     }
     else{
@@ -71,7 +91,11 @@ export class TrainingService {
         training.finishes[training.finishes.length-1].scoreLeft =  lastFinish.scoreLeft - score
       }
     }
-    
+    this.mqttService.publishScore({
+      player: "",
+      score: training.finishes[training.finishes.length-1].scoreLeft,
+      scoreLeft: this.getThrowOut(training.finishes[training.finishes.length-1].scoreLeft),
+    })
     this.training.next(training)
 
   }
@@ -95,6 +119,13 @@ export class TrainingService {
     let newScore = lastFinish + 1
     training.finishes.push({finish: newScore, scoreLeft: newScore, throws: [], locked: false})
     this.training.next(training)
+  }
+
+  getThrowOut(score:number|undefined){
+    if (!score){
+      return
+    }
+    return throwOut[score]? throwOut[score] : null
   }
 
 }
