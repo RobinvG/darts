@@ -48,7 +48,7 @@ export class TraningComponent implements OnInit {
 
   sentScore(){
     this.trainingService.setScore(this.score)
-    this.score;
+    this.score = 0
     this.inputEl.nativeElement.value = ''
   }
 }

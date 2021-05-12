@@ -13,7 +13,7 @@ import { TrainingService } from '../services/training.service';
 export class HomeComponent {
   Games: Game[]= [
     {name: "Normal", types: [101, 201, 301, 501, 1001], selected_type: 501,  legs:3, max_players: 4, players: [{name:""},{name:""}]},
-    {name: "121", max_players:0 , start_score: 100, players:[]},
+    {name: "121", max_players:0 , start_score: 121, players:[], easy_mode:false},
     // {name: "JDC Challenge", max_players: 4},
   ]
   
@@ -58,7 +58,7 @@ export class HomeComponent {
           this.router.navigate(['/game'])    
       }else if (this.selectedGame.name == "121"){
         let startScore = this.selectedGame.start_score ? this.selectedGame.start_score : 100
-        this.trainingService.startTraining(startScore)
+        this.trainingService.startTraining(startScore, this.selectedGame.easy_mode)
         this.router.navigate(['/training'])    
       }
      
@@ -81,4 +81,5 @@ interface Game {
   selected_type?: number
   legs?: number
   start_score?: number
+  easy_mode?: boolean
 }

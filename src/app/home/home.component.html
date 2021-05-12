@@ -27,12 +27,14 @@
             </mat-form-field>
         </div>
         <div *ngIf="selectedGame.start_score">
-            <div>starting Finish</div>
+            <div>Starting from</div>
             <mat-form-field appearance="outline" class="fullwidth">
                 <input type="number" matInput [(ngModel)]="selectedGame.start_score">
             </mat-form-field>
         </div>
-        
+        <div *ngIf="selectedGame.easy_mode !== undefined ">
+            <mat-slide-toggle [(ngModel)]="selectedGame.easy_mode" >Easy mode</mat-slide-toggle>
+        </div>
         <div *ngIf="selectedGame.max_players > 0">
             <div>players ({{selectedGame.players.length}})</div>
             <div *ngFor="let player of selectedGame.players; let i =index">

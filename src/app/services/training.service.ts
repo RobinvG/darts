@@ -12,10 +12,11 @@ import {throwOut} from './throwout'
 export class TrainingService {
   training = new BehaviorSubject<training>({
     finishes: [
-      {finish: 100, scoreLeft: 0, throws: [], locked: false},
+      {finish: 100, scoreLeft: 100, throws: [], locked: false},
     ]
   })
   maxFinish: number =  172
+  easy_mode:  boolean = false
   constructor(
     public dialog: MatDialog,
     private router: Router,
@@ -26,7 +27,8 @@ export class TrainingService {
     }
   }
 
-  startTraining(starts: number){
+  startTraining(starts: number, easy_mode: boolean|  undefined){
+    this.easy_mode =  easy_mode ? easy_mode : false
     this.training.next({
       finishes: [{finish: starts, scoreLeft: starts,  throws: [], locked: false}]
     })
@@ -46,17 +48,23 @@ export class TrainingService {
     }
 
     if (lastFinish.throws.length === 3 && lastFinish.scoreLeft - score !== 0 ){
-      for (var i = training.finishes.length - 1; i >= 0; i--) {
-        if (!training.finishes[i].locked){
-          training.finishes.splice(i, i)
-        }else{
-          break
+      if (!this.easy_mode){
+        for (var i = training.finishes.length - 1; i >= 0; i--) {
+          if (!training.finishes[i].locked){
+            training.finishes.splice(i, i)
+          }else{
+            break
+          }
         }
+        let newFinish =  training.finishes[training.finishes.length-1].finish + 1
+        let test  = {finish: newFinish, scoreLeft: newFinish, throws: [], locked: false}
+        training.finishes.push(test)
+      }else{
+        training.finishes[training.finishes.length-1].scoreLeft = lastFinish.finish
+        training.finishes[training.finishes.length-1].throws = []
       }
-      let newFinish =  training.finishes[training.finishes.length-1].finish + 1
-      let test  = {finish: newFinish, scoreLeft: newFinish, throws: [], locked: false}
-      training.finishes.push(test)
-    
+
+     
     }
     else{
       if (lastFinish.scoreLeft - score !== 1 &&  lastFinish.scoreLeft - score >= 0){
@@ -78,7 +86,7 @@ export class TrainingService {
        }) 
        dialogRef.afterClosed().subscribe(result => {
         if (result){
-          this.startTraining(training.finishes[0].finish)
+          this.startTraining(training.finishes[0].finish, this.easy_mode)
         }else{
           this.router.navigate(['/'])
         }
