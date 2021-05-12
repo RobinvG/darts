@@ -52,10 +52,7 @@ export class TrainingService {
         }else{
           break
         }
-       
       }
-      console.log(training)
-
       let newFinish =  training.finishes[training.finishes.length-1].finish + 1
       let test  = {finish: newFinish, scoreLeft: newFinish, throws: [], locked: false}
       training.finishes.push(test)
