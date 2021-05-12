@@ -1,0 +1,88 @@
+
+.game_mode{
+    font-size:  50px;
+}
+.fullwidth{
+    width: 100%;
+}
+
+.score{
+    margin-top: 30px;
+}
+
+.stats{
+    padding: 20px;
+    // height:  100%;
+}
+
+.checkout{
+    margin-top: 50px;
+    text-align:  center;
+
+    .text{
+        font-size:  30px;
+    }   
+
+    .number{
+        margin-top: 20px;
+        font-weight: 500;
+        font-size:  40px;
+    }
+
+}
+
+.help{
+    text-align: center;
+    margin-top: 30px;
+    font-size: 30px;
+    font-weight: 500;
+}
+@media only screen and (max-width: 600px) {
+    .non_mobile{
+        display: none;
+    }
+    button{
+        height: 90px;
+    }
+    .game_mode{
+        font-size:  30px;
+        text-align: center;
+
+    }
+
+    .checkout{
+        margin-top: 20px;
+        .text{
+            font-size:  20px;
+        }   
+
+        .number{
+            margin-top: 10px;
+            font-size:  30px;
+        }    
+    }
+    .keyboard{
+        margin-top: 25px;
+    }
+
+}
+.table{
+    padding: 20px;
+}
+.mat-badge-content {
+    font-family: 'Material Icons';
+    background: transparent;
+    color: black;
+}
+
+
+::ng-deep .mat-form-field-wrapper{
+    margin-bottom: -1.31em  !important;
+    text-align: center;
+    color: #3f51b5
+ }
+ 
+
+ ::ng-deep .dark-theme .mat-input-element:disabled{
+    color: #3f51b5
+ }

@@ -26,6 +26,10 @@ import {MatMenuModule} from '@angular/material/menu';
 import { MqttModule, IMqttServiceOptions } from "ngx-mqtt";
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatSelectModule} from '@angular/material/select';
+import { TraningComponent } from './traning/traning.component';
+import {MatTableModule} from '@angular/material/table';
+import {MatBadgeModule} from '@angular/material/badge';
 
 export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
   connectOnCreate: false,
@@ -40,6 +44,7 @@ export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
     HomeComponent,
     PopupComponent,
     PlayerComponent,
+    TraningComponent,
   ],
   imports: [
     BrowserModule,
@@ -55,10 +60,13 @@ export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
     MatFormFieldModule,
     MatSlideToggleModule,
     MatSnackBarModule,
+    MatSelectModule,
     MatInputModule,
+    MatTableModule,
     BrowserAnimationsModule,
     MatRadioModule,
     MatButtonToggleModule,
+    MatBadgeModule,
     MatMenuModule,
     MqttModule.forRoot(MQTT_SERVICE_OPTIONS)
   ],

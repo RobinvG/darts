@@ -19,10 +19,10 @@ export class AppComponent implements OnInit, OnDestroy {
   @HostBinding('class') public cssClass!: string;
 
   ngOnInit() {
-    this.themingSubscription = this.themingService.theme.subscribe((theme: string) => {
-      this.cssClass = theme;
-      this.applyThemeOnOverlays();
-    });
+    // this.themingSubscription = this.themingService.theme.subscribe((theme: string) => {
+    //   this.cssClass = theme;
+    //   this.applyThemeOnOverlays();
+    // });
   }
 
   /**

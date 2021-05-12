@@ -1,6 +1,16 @@
 <mat-card fxLayout="column" fxLayoutAlign="center center" >
     <div fxLayout="column" fxLayoutGap="14px">
         <div>
+            <div>Game Mode</div>
+            <mat-form-field appearance="outline"  class="fullwidth">
+                <mat-select  [(value)]="selectedGame" >
+                  <mat-option *ngFor="let game of Games" [value]="game">
+                    {{game.name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+        </div>
+        <div *ngIf="selectedGame.types">
             <div>Type</div>
             <div class="game_type">
                 <mat-radio-group
@@ -10,26 +20,33 @@
                 </mat-radio-group>
             </div>
         </div>
-        <div>
+        <div *ngIf="selectedGame.legs">
             <div>legs (First to)</div>
             <mat-form-field appearance="outline" class="fullwidth">
-                <input type="number" matInput [(ngModel)]="legs">
+                <input type="number" matInput [(ngModel)]="selectedGame.legs">
             </mat-form-field>
         </div>
-        <div>
-            <div>players ({{players.length}})</div>
-            <div *ngFor="let player of players; let i =index">
+        <div *ngIf="selectedGame.start_score">
+            <div>starting Finish</div>
+            <mat-form-field appearance="outline" class="fullwidth">
+                <input type="number" matInput [(ngModel)]="selectedGame.start_score">
+            </mat-form-field>
+        </div>
+        
+        <div *ngIf="selectedGame.max_players > 0">
+            <div>players ({{selectedGame.players.length}})</div>
+            <div *ngFor="let player of selectedGame.players; let i =index">
                 <mat-form-field appearance="outline"  [ngClass]="{'fullwidth': i >= 0}"   >
                     <mat-label>player {{i + 1}}</mat-label>
-                    <input matInput [(ngModel)]="players[i].name" >
+                    <input matInput [(ngModel)]="selectedGame.players[i].name" >
                 </mat-form-field>
             </div>
             <div  fxLayout="row" fxLayoutAlign="space-evenly stretch" > 
-                <div fxFlex *ngIf="players.length < 4"  class="add_player"   (click)="players.push({name:''})">
+                <div fxFlex *ngIf="selectedGame.players.length < selectedGame.max_players"  class="add_player"   (click)="selectedGame.players.push({name:''})">
                     <mat-icon>add</mat-icon> <span class="icon-label" >Add player</span>
                 </div>
-                <div fxFlex class="add_player" (click)="players.splice(-1,1);">
-                    <mat-icon>remove</mat-icon> <span class="icon-label"  >Remove player</span>
+                <div *ngIf="selectedGame.players.length > 1" fxFlex class="add_player" (click)="selectedGame.players.splice(-1,1);">
+                    <mat-icon>remove</mat-icon> <span class="icon-label" >Remove player</span>
                 </div>
             </div>
         </div>

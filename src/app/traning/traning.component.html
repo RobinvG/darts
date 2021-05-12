@@ -1,0 +1,98 @@
+<!-- <div fxLayout="row" > -->
+<div fxLayout="column" fxLayout.gt-sm="row"   fxLayoutAlign="space-between stretch" fxLayoutAlign.gt-sm="start stretch" >
+    <div fxFlex fxFlex.gt-sm="50" >
+        <div fxLayout="column" class="stats">
+            <div fxFlex="40"  >
+                <div class="game_mode">Game: 121</div>
+                <div class="checkout"  fxLayout="row" fxLayoutAlign="space-evenly  start"  >
+                    <div fxFlex class="text">
+                        Checkout 
+                        <div class="number">{{currentCheckout.finish}}</div>
+                    </div>
+                    <div fxFlex class="text">
+                        Score left
+                        <div class="number">{{currentCheckout.scoreLeft}}</div>
+                    </div>
+                    <div fxFlex class="text">
+                        Darts left
+                        <div class="number">{{9 - (currentCheckout.throws.length * 3 )}}</div>
+                    </div>
+                </div>
+                <div class="help">{{dartService.getThrowOut(currentCheckout.scoreLeft)}}</div>
+
+                <mat-form-field appearance="outline" class="fullwidth non_mobile score" >
+                    <input matInput #sc type="number" (keyup.enter)="sentScore()" [(ngModel)]="score ">
+                  </mat-form-field>
+            </div>
+
+
+            <div fxflex fxHide.gt-sm="20" class="keyBoard">
+                <div>
+                    <mat-form-field appearance="outline" class="fullwidth" >
+                    <input matInput type="text" [(ngModel)]="score" disabled>
+                    </mat-form-field>
+                </div>
+                <div fxLayout="column" >
+                    <div fxFlex="33" fxLayout="row" >
+                        <button fxFlex="33" mat-raised-button (click)="keyBoard(7)">7</button>
+                        <button fxFlex="33" mat-raised-button (click)="keyBoard(8)">8</button>
+                        <button fxFlex="34" mat-raised-button (click)="keyBoard(9)">9</button>
+                    </div>
+                </div>
+                <div fxLayout="column" >
+                    <div fxFlex="33" fxLayout="row" >
+                        <button fxFlex="33" mat-raised-button (click)="keyBoard(4)">4</button>
+                        <button fxFlex="33" mat-raised-button (click)="keyBoard(5)">5</button>
+                        <button fxFlex="34" mat-raised-button (click)="keyBoard(6)">6</button>
+                    </div>
+                </div>
+                <div fxLayout="column" >
+                    <div fxFlex="33" fxLayout="row" >
+                        <button fxFlex="33" mat-raised-button (click)="keyBoard(1)">1</button>
+                        <button fxFlex="33" mat-raised-button (click)="keyBoard(2)">2</button>
+                        <button fxFlex="34" mat-raised-button (click)="keyBoard(3)">3</button>
+                    </div>
+                </div>
+                <div fxLayout="column" >
+                    <div fxFlex="33" fxLayout="row" >
+                        <button fxFlex="33" mat-raised-button (click)="keyBoard('clear')"><mat-icon>close</mat-icon></button>
+                        <button fxFlex="33" mat-raised-button (click)="keyBoard(0)">0</button>
+                        <button fxFlex="34" mat-raised-button (click)="keyBoard('check')"><mat-icon>check</mat-icon></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div fxFlex class="table">
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 fullwidth">
+            <ng-container matColumnDef="checkout">
+              <th mat-header-cell *matHeaderCellDef> Checkout </th>
+              <td mat-cell *matCellDef="let element">   <span matBadge="lock" [matBadgeHidden]="!element.locked" matBadgeOverlap="false"> {{element.finish}}</span> </td>
+            </ng-container>
+          
+            <ng-container matColumnDef="throw1">
+              <th mat-header-cell *matHeaderCellDef> Throw 1 </th>
+              <td mat-cell *matCellDef="let element"> {{element.throws[0]}} </td>
+            </ng-container>
+          
+            <ng-container matColumnDef="throw2">
+              <th mat-header-cell *matHeaderCellDef> Throw 2 </th>
+              <td mat-cell *matCellDef="let element"> {{element.throws[1]}} </td>
+            </ng-container>
+          
+            <ng-container matColumnDef="throw3">
+              <th mat-header-cell *matHeaderCellDef> Throw 3 </th>
+              <td mat-cell *matCellDef="let element"> {{element.throws[2]}} </td>
+            </ng-container>
+          
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+       
+    </div>
+
+</div>
+
+

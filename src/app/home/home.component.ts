@@ -1,15 +1,23 @@
-import { Component, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { Component} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { PopupComponent } from '../popup/popup.component';
 import { DartService } from '../services/dart.service';
+import { TrainingService } from '../services/training.service';
+
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.less']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
+  Games: Game[]= [
+    {name: "Normal", types: [101, 201, 301, 501, 1001], selected_type: 501,  legs:3, max_players: 4, players: [{name:""},{name:""}]},
+    {name: "121", max_players:0 , start_score: 100, players:[]},
+    // {name: "JDC Challenge", max_players: 4},
+  ]
+  
+  selectedGame: Game= this.Games[0];
   gameTypes: number[] =[101, 201, 301, 501, 1001]
   gameType: number = 501;
   legs: number = 3;
@@ -20,25 +28,16 @@ export class HomeComponent implements OnInit {
     public dialog: MatDialog,
     private router: Router,
     private dartService: DartService,
-    private renderer: Renderer2,
+    private trainingService: TrainingService,
   ) { }
 
-  ngOnInit(): void {
-    //check if Game is still ongoing 
-    // this.dartService.game.subscribe(game =>{
-    //   if (game.legs > 0){
-    //     this.router.navigate(['/game'])
-    //   }
-    // })
-
-  }
 
   startGame(){
     //check if all names are entered and without duplicates
     this.error = false
     this.errorMessages = []
     let playerNames: string[] = []
-    this.players.forEach(player =>{
+    this.selectedGame.players.forEach(player =>{
       if (player.name === ""){
         this.error= true
         this.errorMessages.push("Player name is empty")
@@ -51,9 +50,20 @@ export class HomeComponent implements OnInit {
     })
 
     if (!this.error){
-      this.dartService.startGame(this.legs, this.gameType, this.players[0].name, this.players[1]?.name, this.players[2]?.name, this.players[3]?.name)
-      this.router.navigate(['/game'])    
+      if (this.selectedGame.name == "Normal"){
+        let legs = this.selectedGame.legs ? this.selectedGame.legs : 0
+        let gameType =  this.selectedGame.selected_type ? this.selectedGame.selected_type : 501
+        this.dartService.startGame(legs, gameType, this.selectedGame.players[0].name, 
+          this.selectedGame.players[1]?.name, this.selectedGame.players[2]?.name, this.selectedGame.players[3]?.name)
+          this.router.navigate(['/game'])    
+      }else if (this.selectedGame.name == "121"){
+        let startScore = this.selectedGame.start_score ? this.selectedGame.start_score : 100
+        this.trainingService.startTraining(startScore)
+        this.router.navigate(['/training'])    
+      }
+     
     }
+  
   }
 
 }
@@ -61,4 +71,14 @@ export class HomeComponent implements OnInit {
 
 export interface player{
   name: string;
+}
+
+interface Game {
+  name: string
+  max_players: number
+  players: player[]
+  types?: any[]
+  selected_type?: number
+  legs?: number
+  start_score?: number
 }
