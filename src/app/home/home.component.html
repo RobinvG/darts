@@ -10,7 +10,7 @@
                 </mat-select>
               </mat-form-field>
         </div>
-        <div *ngIf="selectedGame.types">
+        <div *ngIf="selectedGame.types !== undefined">
             <div>Type</div>
             <div class="game_type">
                 <mat-radio-group
@@ -20,13 +20,13 @@
                 </mat-radio-group>
             </div>
         </div>
-        <div *ngIf="selectedGame.legs">
+        <div *ngIf="selectedGame.legs !== undefined">
             <div>legs (First to)</div>
             <mat-form-field appearance="outline" class="fullwidth">
                 <input type="number" matInput [(ngModel)]="selectedGame.legs">
             </mat-form-field>
         </div>
-        <div *ngIf="selectedGame.start_score">
+        <div *ngIf="selectedGame.start_score !== undefined">
             <div>Starting from</div>
             <mat-form-field appearance="outline" class="fullwidth">
                 <input type="number" matInput [(ngModel)]="selectedGame.start_score">

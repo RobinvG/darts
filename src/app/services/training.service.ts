@@ -119,6 +119,13 @@ export class TrainingService {
     let newScore = lastFinish + 1
     training.finishes.push({finish: newScore, scoreLeft: newScore, throws: [], locked: false})
     this.training.next(training)
+    
+    this.mqttService.publishScore({
+      player: "",
+      score: newScore,
+      scoreLeft: this.getThrowOut(newScore),
+    })
+   
   }
 
   getThrowOut(score:number|undefined){
